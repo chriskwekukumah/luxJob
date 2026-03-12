@@ -1,11 +1,15 @@
-library(glue)
-library(DBI)
+get_skills <- function(limit = 100) {
+  con <- connect_db()
+  on.exit(dbDisconnect(con))
 
-# 1. Define your limit
-my_limit <- 100
+  query <- glue::glue_sql(
+    "SELECT skill_id, skill_label
+     FROM adem.skills
+     LIMIT {limit}",
+    .con = con
+  )
 
-# 2. Construct the SQL query using glue
-sql_query <- glue("SELECT * FROM adem.skills LIMIT {my_limit}")
+  result <- dbGetQuery(con, query)
+  return(result)
+}
 
-# 3. Execute against your connection (assuming 'con' is established)
-# result <- dbGetQuery(con, sql_query)
