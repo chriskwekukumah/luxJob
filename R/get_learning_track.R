@@ -1,68 +1,22 @@
-#' Title
-#'#' Get learning tracks (optionally filtered by skill)
-#'
-#' Returns learning tracks from `adem_learning_tracks`. If `skill_id` is provided,
-#' filters to only tracks associated with that specific skill.
-#'
-#' @param con Database connection (DBI)
-#' @param skill_id Character skill identifier (optional). Use exact `skill_id`
-#'   from `adem_skills` table.
-#'
-#' @return Data frame with columns: `track_id`, `title`, `description`, `url`
-#'
-#' @examples
-#' \dontrun{
-#' con <- connect_db()
-#'
-#' # All learning tracks
-#' get_learning_tracks(con)
-#'
-#' # Tracks for specific skill
-#' get_learning_tracks(con, skill_id = "skill_r")
-#'
-#' dbDisconnect(con)
-#' }
-#'
-#' @export
-get_learning_tracks <- function(con, skill_id = NULL) {
-  stopifnot(inherits(con, "DBIConnection"))
+get_learning_tracks <- function(skill_id = NULL) {
+  con <- connect_db()
+  on.exit(dbDisconnect(con))
 
-  sql <- glue_sql("
-    SELECT DISTINCT
-      lt.track_id,
-      lt.title,
-      lt.description,
-      lt.url
-    FROM adem_learning_tracks lt
-    LEFT JOIN adem_skills s ON lt.skill_id = s.skill_id
-    WHERE ({skill_id}* IS NULL OR s.skill_id = {skill_id}*)
-    ORDER BY lt.title;
-  ", skill_id = skill_id, .con = con)
+  # Base query
+  query <- "SELECT track_id, title, description, url
+            FROM adem.learning_tracks
+            WHERE 1=1"
 
-  DBI::dbGetQuery(con, sql)
-}
+  # Add skill filter if provided
+  if (!is.null(skill_id)) {
+    query <- paste(query, glue::glue_sql(
+      "AND track_id IN (
+          SELECT track_id
+          FROM adem.learning_track_skills
+          WHERE skill_id = {skill_id})",
+      .con = con))
+  }
 
-#' @param con
-#' @param skill_id
-#'
-#' @returns
-#' @export
-#'
-#' @examples
-get_learning_tracks <- function(con, skill_id = NULL) {
-  stopifnot(inherits(con, "DBIConnection"))
-
-  sql <- glue_sql("
-    SELECT DISTINCT
-  lt.track_id,
-  lt.title,
-  lt.description,
-  lt.url
-FROM adem_learning_tracks lt
-LEFT JOIN adem_skills s ON lt.track_id = s.skill_id  -- ou table de liaison si existe
-WHERE ({skill_id} IS NULL OR s.skill_id = {skill_id})
-ORDER BY lt.title;
-  ", skill_id = skill_id, .con = con)
-
-  DBI::dbGetQuery(con, sql)
+  result <- dbGetQuery(con, query)
+  return(result)
 }

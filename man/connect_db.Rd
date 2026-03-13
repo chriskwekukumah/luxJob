@@ -2,38 +2,23 @@
 % Please edit documentation in R/connect_db.R
 \name{connect_db}
 \alias{connect_db}
-\title{Title
-#' Connect to ADEM PostgreSQL database}
+\title{Connect to Database}
 \usage{
+connect_db()
+
 connect_db()
 }
 \value{
-A \code{DBIConnection} object representing an active database connection.
+A DBI connection object (class \code{PqConnection})
 }
 \description{
-Establishes a secure database connection to the ADEM (Luxembourg employment agency)
-PostgreSQL database using environment variables for credentials.
-}
-\details{
-This function creates a DBI connection using \code{RPostgres} by reading connection
-parameters from environment variables. Set these in your \code{.Renviron} file:
-
-\itemize{
-\item \code{DB_NAME}: Database name
-\item \code{DB_HOST}: Database host
-\item \code{DB_USER}: Database username
-\item \code{DB_PASSWORD}: Database password
-\item \code{DB_PORT}: Database port (defaults to 5432 if unset)
-}
-
-Always disconnect connections when finished using \code{DBI::dbDisconnect()}.
+Establishes a connection to the PostgreSQL database using credentials
+and host information stored in environment variables.
 }
 \examples{
 \dontrun{
-  # Ensure environment variables are set in .Renviron first
-  con <- connect_db()
-  DBI::dbListTables(con)
-  DBI::dbDisconnect(con)
+con <- connect_db()
+DBI::dbListTables(con)
+DBI::dbDisconnect(con)
 }
-
 }

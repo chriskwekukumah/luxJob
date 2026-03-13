@@ -1,4 +1,2 @@
-^renv$
-^renv\.lock$
-^myfirstpackage\.Rproj$
+^luxJob\.Rproj$
 ^\.Rproj\.user$
