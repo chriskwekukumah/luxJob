@@ -2,6 +2,7 @@
 
 export(connect_db)
 export(get_book_by_id)
+export(get_companies)
 export(get_learning_tracks)
 export(get_skill_by_id)
 export(get_vacancies_by_skill)
