@@ -1,4 +1,4 @@
-#' Title
+#'
 #'#' Get skill details by ID
 #'
 #' Retrieves a specific skill from the ADEM database using its unique skill ID.
