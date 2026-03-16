@@ -1,3 +1,4 @@
+
 #' Get book recommendation by ID
 #'
 #' Retrieves a single book recommendation from adem.books
@@ -15,12 +16,9 @@
 #' book <- get_book_by_id(101)
 #' print(book)
 #' }
-
-
-
 get_book_by_id <- function(book_id) {
   con <- connect_db()
-  on.exit(dbDisconnect(con))
+  on.exit(DBI::dbDisconnect(con))
 
   query <- glue::glue_sql(
     "SELECT book_id, title, author, skill_id
@@ -29,9 +27,8 @@ get_book_by_id <- function(book_id) {
     .con = con
   )
 
-  result <- dbGetQuery(con, query)
+  result <- DBI::dbGetQuery(con, query)
 
-  # Return NULL if not found
   if (nrow(result) == 0) return(NULL)
 
   return(result)

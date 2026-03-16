@@ -2,10 +2,8 @@
 % Please edit documentation in R/connect_db.R
 \name{connect_db}
 \alias{connect_db}
-\title{Connect to Database}
+\title{Connect to the ADEM PostgreSQL Database}
 \usage{
-connect_db()
-
 connect_db()
 }
 \value{

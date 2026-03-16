@@ -1,6 +1,11 @@
+#' Get a learning track
+#'
+#' @param book_id The unique identifier of the book.
+#' @return A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+#' @export
 get_learning_tracks <- function(skill_id = NULL) {
   con <- connect_db()
-  on.exit(dbDisconnect(con))
+  on.exit(DBI::dbDisconnect(con))
 
   # Base query
   query <- "SELECT track_id, title, description, url
@@ -11,12 +16,12 @@ get_learning_tracks <- function(skill_id = NULL) {
   if (!is.null(skill_id)) {
     query <- paste(query, glue::glue_sql(
       "AND track_id IN (
-          SELECT track_id
-          FROM adem.learning_track_skills
-          WHERE skill_id = {skill_id})",
+            SELECT track_id
+            FROM adem.learning_track_skills
+            WHERE skill_id = {skill_id})",
       .con = con))
   }
 
-  result <- dbGetQuery(con, query)
+  result <- DBI::dbGetQuery(con, query)
   return(result)
 }

@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^luxJob\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
