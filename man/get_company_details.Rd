@@ -2,16 +2,16 @@
 % Please edit documentation in R/get_companies_details.R
 \name{get_company_details}
 \alias{get_company_details}
-\title{Get a book by its ID}
+\title{Get company details by its ID}
 \usage{
 get_company_details(company_id)
 }
 \arguments{
-\item{book_id}{The unique identifier of the book.}
+\item{company_id}{The unique identifier of the company.}
 }
 \value{
-A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+A named list with two elements: \code{company} (company info) and \code{vacancies} (associated vacancies). Returns NULL if no company is found.
 }
 \description{
-Get a book by its ID
+Get company details by its ID
 }

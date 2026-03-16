@@ -1,17 +1,15 @@
-#' Get a learning track
+#' Get learning tracks
 #'
-#' @param book_id The unique identifier of the book.
-#' @return A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+#' @param skill_id The unique identifier of the skill to filter tracks by.
+#' @return A data frame with columns: track_id, title, description, url. Returns all tracks if no skill_id is provided.
 #' @export
 get_learning_tracks <- function(skill_id = NULL) {
   con <- connect_db()
   on.exit(DBI::dbDisconnect(con))
-
   # Base query
   query <- "SELECT track_id, title, description, url
             FROM adem.learning_tracks
             WHERE 1=1"
-
   # Add skill filter if provided
   if (!is.null(skill_id)) {
     query <- paste(query, glue::glue_sql(
@@ -21,7 +19,6 @@ get_learning_tracks <- function(skill_id = NULL) {
             WHERE skill_id = {skill_id})",
       .con = con))
   }
-
   result <- DBI::dbGetQuery(con, query)
   return(result)
 }

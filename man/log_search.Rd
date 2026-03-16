@@ -2,18 +2,18 @@
 % Please edit documentation in R/log_search.R
 \name{log_search}
 \alias{log_search}
-\title{Log a search query}
+\title{Log a user search query}
 \usage{
 log_search(user_id, query)
 }
 \arguments{
 \item{user_id}{The unique identifier of the user.}
 
-\item{query}{Character string. The search query to log.}
+\item{query}{The search query string to log.}
 }
 \value{
 TRUE if the log was successful, FALSE otherwise.
 }
 \description{
-Records a user search query into the \code{adem.search_logs} table.
+Log a user search query
 }

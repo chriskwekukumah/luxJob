@@ -2,16 +2,16 @@
 % Please edit documentation in R/get_learning_track.R
 \name{get_learning_tracks}
 \alias{get_learning_tracks}
-\title{Get a book by its ID}
+\title{Get learning tracks}
 \usage{
 get_learning_tracks(skill_id = NULL)
 }
 \arguments{
-\item{book_id}{The unique identifier of the book.}
+\item{skill_id}{The unique identifier of the skill to filter tracks by.}
 }
 \value{
-A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+A data frame with columns: track_id, title, description, url. Returns all tracks if no skill_id is provided.
 }
 \description{
-Get a book by its ID
+Get learning tracks
 }

@@ -1,12 +1,12 @@
-#' Get a book by its ID
+#' Get a learning track by its ID
 #'
-#' @param book_id The unique identifier of the book.
-#' @return A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+#' @param track_id The unique identifier of the learning track.
+#' @return A named list with two elements: \code{track} (track info) and \code{skills} (linked skills). Returns NULL if no track is found.
 #' @export
+#' @importFrom DBI dbDisconnect dbGetQuery
 get_learning_track_by_id <- function(track_id) {
   con <- connect_db()
   on.exit(dbDisconnect(con))
-
   # First query - get the track
   track_query <- glue::glue_sql(
     "SELECT track_id, title, description, url
@@ -14,12 +14,9 @@ get_learning_track_by_id <- function(track_id) {
      WHERE track_id = {track_id}",
     .con = con
   )
-
   track <- dbGetQuery(con, track_query)
-
   # Return NULL if not found
   if (nrow(track) == 0) return(NULL)
-
   # Second query - get linked skills
   skills_query <- glue::glue_sql(
     "SELECT s.skill_id, s.skill_label
@@ -28,9 +25,7 @@ get_learning_track_by_id <- function(track_id) {
      WHERE lts.track_id = {track_id}",
     .con = con
   )
-
   skills <- dbGetQuery(con, skills_query)
-
   return(list(
     track = track,
     skills = skills
