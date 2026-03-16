@@ -8,7 +8,7 @@ get_companies <- function(limit = 100) {
   on.exit(DBI::dbDisconnect(con))
 
   query <- glue::glue_sql(
-    "SELECT company_id, company_name
+    "SELECT company_id, name
      FROM adem.companies
      LIMIT {limit}",
     .con = con

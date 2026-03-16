@@ -7,11 +7,9 @@
 get_skill_by_id(skill_id)
 
 get_skill_by_id(skill_id)
-
-get_skill_by_id(skill_id)
 }
 \arguments{
-\item{skill_id}{}
+\item{skill_id}{Character or integer skill identifier from \code{adem.skills} table.}
 
 \item{book_id}{The unique identifier of the book.}
 }

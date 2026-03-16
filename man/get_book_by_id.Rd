@@ -7,11 +7,9 @@
 get_book_by_id(book_id)
 
 get_book_by_id(book_id)
-
-get_book_by_id(book_id)
 }
 \arguments{
-\item{book_id}{}
+\item{book_id}{Integer identifier for the book recommendation.}
 }
 \value{
 A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
@@ -21,8 +19,7 @@ Returns empty data frame if book not found.
 }
 \description{
 Retrieves a specific book recommendation from the \code{adem.book_recommendations}
-table using its \code{book_id}. Automatically manages database connection and
-cleanup.
+table using its \code{book_id}. Automatically manages database connection and cleanup.
 }
 \examples{
 \dontrun{
