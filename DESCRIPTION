@@ -1,7 +1,7 @@
 Package: luxJob
 Title: Title: Data Access Functions for the ADEM Luxembourg Labour Market Database
 Version: 0.0.0.9000
-Authors@R: person("Christopher", "Kumah", , "chriskwekukumah@gmail.com", role = c( "creator"))
+Authors@R: person("Christopher", "Kumah", email = "chriskwekukumah@gmail.com", role = 'cre')
 Description: luxJob is an R package that provides a suite of data access functions for querying the ADEM (Agence pour le Développement de l'Emploi) PostgreSQL database. It enables users to retrieve and filter information on job vacancies, companies, skills, learning tracks, and books, making it easier to analyse Luxembourg's labour market data programmatically from within R..
 License: MIT + file LICENSE
 Encoding: UTF-8
