@@ -1,3 +1,8 @@
+#' Get a book by its ID
+#'
+#' @param book_id The unique identifier of the book.
+#' @return A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+#' @export
 get_learning_track_by_id <- function(track_id) {
   con <- connect_db()
   on.exit(dbDisconnect(con))

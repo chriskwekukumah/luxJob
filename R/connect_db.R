@@ -1,11 +1,3 @@
-#' Connect to Database
-#' @export
-connect_db <- function() {
-  print("Hello! The database is now 'connected'.")
-}
-
-
-
 #' Connect to the ADEM PostgreSQL Database
 #'
 #' @description Establishes a connection to the PostgreSQL database using credentials
@@ -21,12 +13,12 @@ connect_db <- function() {
 #' DBI::dbDisconnect(con)
 #' }
 connect_db <- function() {
-  # ... your existing function code here ...
+  DBI::dbConnect(
+    RPostgres::Postgres(),
+    dbname   = Sys.getenv("DB_NAME"),
+    host     = Sys.getenv("DB_HOST"),
+    port     = Sys.getenv("DB_PORT"),
+    user     = Sys.getenv("DB_USER"),
+    password = Sys.getenv("DB_PASSWORD")
+  )
 }
-connect_db <- function() {
-  print("Hello! The database is now 'connected'.")
-}
-
-
-?connect_db
-

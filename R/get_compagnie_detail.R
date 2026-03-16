@@ -1,23 +1,19 @@
-get_companie <- function() {
+#' Get a book by its ID
+#'
+#' @param book_id The unique identifier of the book.
+#' @return A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+#' @export
+get_companies <- function(limit = 100) {
   con <- connect_db()
-  DBI:: dbGetQuery(con, "SELECT
-      c.company_id,
-      c.name,
-      c.sector,
-      v.vacancy_id,
-      v.company_id,
-	  v.canton,
-	  v.occupation,
-      v.year,
-      v.month
-    FROM adem.companies c
-    LEFT JOIN adem.vacancies v
-      ON c.company_id = v.company_id
-    WHERE c.company_id = v.company_id
-    ORDER BY v.year DESC, v.month DESC NULLS LAST
-    LIMIT 100;
-")
-  DBI::dbDisconnect(con)
+  on.exit(DBI::dbDisconnect(con))
+
+  query <- glue::glue_sql(
+    "SELECT company_id, company_name
+     FROM adem.companies
+     LIMIT {limit}",
+    .con = con
+  )
+
+  result <- DBI::dbGetQuery(con, query)
+  return(result)
 }
-
-

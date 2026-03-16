@@ -2,18 +2,20 @@
 % Please edit documentation in R/get_vacancies_by_id.R
 \name{get_vacancies_by_skill}
 \alias{get_vacancies_by_skill}
-\title{#' Get vacancies requiring a specific skill}
+\title{Get a book by its ID}
 \usage{
-get_vacancies_by_skill(con, skill_name)
-
 get_vacancies_by_skill(con, skill_name)
 }
 \arguments{
 \item{con}{A \code{DBIConnection} object to the ADEM PostgreSQL database}
 
-\item{skill_name}{}
+\item{skill_name}{Character string. Exact \code{skill_label} from \code{adem.skills} table.}
+
+\item{book_id}{The unique identifier of the book.}
 }
 \value{
+A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.
+
 A data frame with columns:
 \itemize{
 \item \code{vacancy_id}: Unique vacancy identifier
@@ -23,20 +25,5 @@ A data frame with columns:
 }
 }
 \description{
-Retrieves all job vacancies that require a given skill from the ADEM database.
-Returns vacancies ordered by most recent first (year, month DESC).
-}
-\examples{
-\dontrun{
-  con <- connect_db()
-
-  # Get all vacancies requiring "communication" skill
-  vacancies <- get_vacancies_by_skill(con, "communication")
-
-  # View 5 most recent
-  head(vacancies, 5)
-
-  dbDisconnect(con)
-}
-
+Get a book by its ID
 }
