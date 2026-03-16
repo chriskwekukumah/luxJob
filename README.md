@@ -12,6 +12,7 @@ devtools::install_github("chriskwekukumah/luxJob")
 Create a `.Renviron` file in your project folder:
 ```
 DB_HOST=your_host
+DB_PORT=5432
 DB_NAME=your_database_name
 DB_USER=your_username
 DB_PASSWORD=your_password
