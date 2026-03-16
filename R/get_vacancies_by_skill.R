@@ -1,3 +1,4 @@
+
 get_vacancies <- function(skill = NULL, company = NULL, canton = NULL, limit = 100) {
   con <- connect_db()
   on.exit(dbDisconnect(con))

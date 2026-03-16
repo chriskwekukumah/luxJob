@@ -1,4 +1,4 @@
-#' Get a book by its ID
+#' Get a learning track
 #'
 #' @param book_id The unique identifier of the book.
 #' @return A data frame with columns: book_id, title, author, skill_id. Returns NULL if no book is found.

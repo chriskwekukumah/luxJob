@@ -1,6 +1,4 @@
-
-#'
-#'#' Get sample companies from ADEM database
+#' Get sample companies from ADEM database
 #'
 #' Retrieves the first 100 companies from the `adem.companies` table.
 #' Automatically establishes and closes the database connection.
@@ -12,24 +10,17 @@
 #' @return A data frame with company data (up to 100 rows).
 #'
 #' @examples
+#' \dontrun{
 #' companies <- get_companies()
 #' head(companies)
 #' nrow(companies)
+#' }
 #'
 #' @export
-#'
-#' @importFrom DBI dbGetQuery dbDisconnect
 get_companies <- function() {
   con <- connect_db()
-  result <- DBI::dbGetQuery(con, "SELECT * FROM adem_companies LIMIT 100;")
-  DBI::dbDisconnect(con)
+  on.exit(DBI::dbDisconnect(con))
+
+  result <- DBI::dbGetQuery(con, "SELECT * FROM adem.companies LIMIT 100;")
   return(result)
 }
-
-#' @returns
-#' @export
-#'
-#' @examples
-
-
-
