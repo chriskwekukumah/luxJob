@@ -1,5 +1,5 @@
 Package: luxJob
-Title: What the Package Does (One Line, Title Case)
+Title: Title: Data Access Functions for the ADEM Luxembourg Labour Market Database
 Version: 0.0.0.9000
 Authors@R: 
     person("Christopher", "Kumah", , "chriskwekukumah@gmail.com", role = c("author", "creator"))
