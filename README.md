@@ -54,10 +54,3 @@ log_search(user_id = 1, query = "machine learning jobs")
 ```
 ```
 
-**Step 6 — Scroll down and click "Commit new file"** ✅
-
----
-
-## After committing on GitHub, pull in RStudio:
-```
-git pull
