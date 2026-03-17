@@ -1,27 +1,34 @@
 #' Get vacancies requiring a specific skill
 #'
-#' Retrieves all job vacancies that require a given skill from the ADEM database.
-#' Returns vacancies ordered by most recent first (year, month DESC).
+#' Retrieves all job vacancies that require a given skill
+#' from the ADEM database by joining adem.vacancies,
+#' adem.vacancy_skills and adem.skills tables.
+#' Returns vacancies ordered by most recent first
+#' (year, month DESC).
 #'
-#' @param con A `DBIConnection` object to the ADEM PostgreSQL database.
-#' @param skill_name Character string. Exact `skill_label` from `adem.skills` table.
+#' @param con A \code{DBIConnection} object to the ADEM
+#'   PostgreSQL database.
+#' @param skill_name Character string. Exact
+#'   \code{skill_label} from the \code{adem.skills}
+#'   table e.g. "communication".
 #'
 #' @return A data frame with columns:
 #'   \itemize{
-#'     \item `vacancy_id`: Unique vacancy identifier
-#'     \item `year`: Publication year
-#'     \item `month`: Publication month
-#'     \item `skill_label`: Matched skill label
+#'     \item \code{vacancy_id}: Unique vacancy identifier
+#'     \item \code{year}: Publication year
+#'     \item \code{month}: Publication month
+#'     \item \code{skill_label}: Matched skill label
 #'   }
+#'
+#' @export
 #'
 #' @examples
 #' \dontrun{
 #' con <- connect_db()
-#' get_vacancies_by_skill(con, "communication")
+#' vacancies <- get_vacancies_by_skill(con, "communication")
+#' print(vacancies)
 #' DBI::dbDisconnect(con)
 #' }
-#'
-#' @export
 get_vacancies_by_skill <- function(con, skill_name) {
   sql <- glue::glue_sql(
     "SELECT DISTINCT v.vacancy_id,
@@ -37,6 +44,5 @@ get_vacancies_by_skill <- function(con, skill_name) {
      ORDER BY v.year DESC, v.month DESC;",
     .con = con
   )
-
   DBI::dbGetQuery(con, sql)
 }
