@@ -1,9 +1,28 @@
 #' Get a learning track by its ID
 #'
-#' @param track_id The unique identifier of the learning track.
-#' @return A named list with two elements: \code{track} (track info) and \code{skills} (linked skills). Returns NULL if no track is found.
+#' Retrieves a single learning track and its linked skills
+#' from the adem.learning_tracks and adem.skills tables
+#' using the track_id. Returns NULL if not found.
+#'
+#' @param track_id Integer. The unique identifier of the
+#'   learning track e.g. 3.
+#'
+#' @return A named list with two elements: \code{track}
+#'   (a data frame with columns: track_id, title, description, url)
+#'   and \code{skills} (a data frame with columns: skill_id,
+#'   skill_label). Returns NULL if no track is found.
+#'
 #' @export
+#'
 #' @importFrom DBI dbDisconnect dbGetQuery
+#'
+#' @examples
+#' \dontrun{
+#' # Get learning track with ID 3
+#' track <- get_learning_track_by_id(3)
+#' print(track$track)
+#' print(track$skills)
+#' }
 get_learning_track_by_id <- function(track_id) {
   con <- connect_db()
   on.exit(dbDisconnect(con))
