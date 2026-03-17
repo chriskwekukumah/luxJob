@@ -1,35 +1,40 @@
-
-#' Get book recommendation by ID
+#' Get books
 #'
-#' Retrieves a single book recommendation from adem.books
-#' table using its book_id. Returns NULL if not found.
+#' Retrieves book recommendations from the adem.books table.
+#' Optionally filters by skill_id. Returns all books if no
+#' skill is provided.
 #'
-#' @param book_id Integer. The ID of the book e.g. 101
+#' @param skill Integer or NULL. The skill_id to filter by e.g. 5.
+#'   If NULL, all books are returned.
 #'
 #' @return A data frame with columns: book_id, title,
-#'   author, skill_id
+#'   author, skill_id. Returns an empty data frame if no
+#'   books are found.
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' book <- get_book_by_id(101)
-#' print(book)
+#' # Get all books
+#' all_books <- get_books()
+#'
+#' # Get books for a specific skill
+#' skill_books <- get_books(skill = 5)
 #' }
-get_book_by_id <- function(book_id) {
+get_books <- function(skill = NULL) {
   con <- connect_db()
   on.exit(DBI::dbDisconnect(con))
-
-  query <- glue::glue_sql(
-    "SELECT book_id, title, author, skill_id
-     FROM adem.books
-     WHERE book_id = {book_id}",
-    .con = con
-  )
-
+  # Base query
+  query <- "SELECT book_id, title, author, skill_id
+            FROM adem.books
+            WHERE 1=1"
+  # Add skill filter if provided
+  if (!is.null(skill)) {
+    query <- paste(query, glue::glue_sql(
+      "AND skill_id = {skill}",
+      .con = con
+    ))
+  }
   result <- DBI::dbGetQuery(con, query)
-
-  if (nrow(result) == 0) return(NULL)
-
   return(result)
 }
